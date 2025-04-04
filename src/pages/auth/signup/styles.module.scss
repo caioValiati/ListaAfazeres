@@ -1,0 +1,35 @@
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    > div {
+        width: 28%;
+        min-width: 280px;
+    }
+
+    .titleContainer {
+        display: flex;
+        flex-direction: column;
+        gap: .6rem;
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: var(--font-size-xxl);
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--light-t);
+            font-weight: 400;
+        }
+    }
+
+    .forgotPasswordContainer {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}

@@ -1,0 +1,39 @@
+.forgotContainer {display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .titleContainer {
+        display: flex;
+        flex-direction: column;
+        gap: .6rem;
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: var(--font-size-xxl);
+            color: var(--light);
+            font-weight: 600;
+        }
+    }
+
+    > div {
+        width: 28%;
+        min-width: 280px;
+
+        .steps {
+            margin-bottom: 2rem;
+
+            * {
+                color: var(--light) !important;
+
+            }
+            
+            :global(.ant-steps-item-wait) {
+                :global(.ant-steps-item-icon) {
+                    opacity: 0.5;
+                    background-color: var(--dark-2);
+                }
+            }
+        }
+    }
+}

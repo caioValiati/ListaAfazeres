@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+    --dark: #101010;
+    --dark-2: #303030;
+    --dark-3: #444444;
+    --light: #FAFAFA;
+    --light-2: #bebebe;
+
+    --font-main:  "Rubik", sans-serif;
+    --font-alt: 'Roboto', sans-serif;
+
+    --font-size-base: 1rem; // 16px
+    --font-size-lg: 1.125rem; // 18px
+    --font-size-xl: 1.25rem; // 20px
+    --font-size-xxl: 1.5rem; // 24px
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    line-height: 1.6;
+    background-color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
