@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Divider, Flex, Progress, Radio } from "antd";
+import { Button, Divider, Flex, Progress, Radio } from "antd";
 import styles from "./styles.module.scss";
 import { IoMdTrash } from "react-icons/io";
 import { MdEditSquare } from "react-icons/md";
 import { Listas, TarefasUrgentes } from "../../../data/services/db";
 import { ITarefa, ITarefaUrgente } from "../../../data/interfaces/tarefa";
+import { useTheme } from "../../theme/themeContext";
 
 export default function Home() {
+  const { toggleTheme, themeName } = useTheme();
+
   const [tasks, setTasks] = useState<ITarefaUrgente[] | ITarefa[]>(
     TarefasUrgentes
   );
@@ -77,6 +80,9 @@ export default function Home() {
 
   return (
     <div className={styles.mainContainer}>
+      <Button onClick={toggleTheme}>
+        Trocar para tema {themeName === "dark" ? "claro" : "escuro"}
+      </Button>
       <Flex className={styles.header} align="end" justify="space-between">
         <div className={styles.headerTitle}>
           <p>Olá, Caio</p>
