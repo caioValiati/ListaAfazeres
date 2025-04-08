@@ -1,9 +1,9 @@
-import { Tarefa } from "./tarefa";
+import { ITarefa } from "./tarefa";
 
-export interface Lista {
+export interface ILista {
     id: number;
     descricao: string;
-    tarefas: Tarefa[];
+    tarefas: ITarefa[];
     qntdConcluidas: number;
     qntdTarefas: number;
     cor: string;

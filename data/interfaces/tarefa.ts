@@ -1,10 +1,10 @@
-export interface Tarefa {
+export interface ITarefa {
     id: number;
     descricao: string;
     prioridade: number;
     concluida: boolean;
 }
 
-export interface TarefaUrgente extends Tarefa {
+export interface ITarefaUrgente extends ITarefa {
     lista: string;
 }

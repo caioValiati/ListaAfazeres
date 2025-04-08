@@ -16,6 +16,9 @@ export default function Login() {
 
   return (
     <div className={styles.loginContainer}>
+      <div className={styles.backdrop}>
+        <div></div>
+      </div>
       <div>
         <div className={styles.titleContainer}>
           <h1>Entrar no To-Do</h1>

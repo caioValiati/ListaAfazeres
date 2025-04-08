@@ -1,7 +1,7 @@
-import { Lista } from "../interfaces/lista"
-import { TarefaUrgente } from "../interfaces/tarefa"
+import { ILista } from "../interfaces/lista"
+import { ITarefaUrgente } from "../interfaces/tarefa"
 
-export const TarefasUrgentes: TarefaUrgente[] = [
+export const TarefasUrgentes: ITarefaUrgente[] = [
     {
         id: 1,
         descricao: "Estudar React",
@@ -23,9 +23,44 @@ export const TarefasUrgentes: TarefaUrgente[] = [
         lista: "Casa",
         concluida: true,
     },
+    {
+        id: 4,
+        descricao: "Limpar a casa",
+        prioridade: 2,
+        lista: "Casa",
+        concluida: true,
+    },
+    {
+        id: 5,
+        descricao: "Limpar a casa",
+        prioridade: 2,
+        lista: "Casa",
+        concluida: true,
+    },
+    {
+        id: 6,
+        descricao: "Limpar a casa",
+        prioridade: 2,
+        lista: "Casa",
+        concluida: true,
+    },
+    {
+        id: 7,
+        descricao: "Limpar a casa",
+        prioridade: 2,
+        lista: "Casa",
+        concluida: true,
+    },
+    {
+        id: 8,
+        descricao: "Limpar a casa",
+        prioridade: 2,
+        lista: "Casa",
+        concluida: true,
+    },
 ]
 
-export const Listas: Lista[] = [
+export const Listas: ILista[] = [
     {
         id: 1,
         descricao: "Linguagens de Programação",

@@ -2,7 +2,7 @@
 
 :root {
     --dark: #101010;
-    --dark-2: #303030;
+    --dark-2: #2222229a;
     --dark-3: #444444;
     --light: #FAFAFA;
     --light-2: #bebebe;
@@ -28,7 +28,7 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 body {
