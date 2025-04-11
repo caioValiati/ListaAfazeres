@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Divider, Flex } from "antd";
 import styles from "./styles.module.scss";
 import { Listas, TarefasUrgentes } from "../../../data/services/db";
@@ -9,6 +9,7 @@ import { Task } from "../../components/task";
 import { ListCard } from "../../components/listCard";
 import { ModalLista } from "../../components/modalLista";
 import { ModalTask } from "../../components/modalTask";
+import { buscarUsuarios } from "../../../data/services/UsuarioService"
 
 export default function Home() {
   const [openModalLista, setOpenModalLista] = useState(false);
@@ -28,6 +29,21 @@ export default function Home() {
       prevTasks.map((t) => (t.id === task.id ? task : t))
     );
   };
+
+  useEffect(() => {
+    const teste = async() => {
+      const param = {
+        id: 0,
+        titulo: "teste",
+        createdAt: null,
+        updatedAt: null,
+        tarefas: []
+      }
+      const res = await buscarUsuarios()
+      console.log(res);
+    };
+    teste();
+  }, [])
 
   return (
     <div className={styles.mainContainer}>
