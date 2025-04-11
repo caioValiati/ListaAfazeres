@@ -6,6 +6,7 @@
     --dark-3: #444444;
     --light: #FAFAFA;
     --light-2: #bebebe;
+    --light-3: "#fafafa41";
 
     --font-main:  "Rubik", sans-serif;
     --font-alt: 'Roboto', sans-serif;
@@ -23,6 +24,28 @@
     padding: 0;
     box-sizing: border-box;
     font-family: var(--font-main);
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark-3) transparent;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--dark-3);
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}
+
+.ant-color-picker-panel, 
+.ant-color-picker-input-container, 
+.ant-color-picker-inner-content .ant-divider {
+    display: none !important;
 }
 
 html {

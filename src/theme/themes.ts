@@ -8,9 +8,10 @@ export const lightTheme: ThemeConfig = {
     },
     Input: {
       colorTextPlaceholder: "#666666",
-      colorBgContainer: "#ffffff",
+      colorBgContainer: "transparent",
       colorIcon: "#666666",
       colorBorder: "#cccccc",
+      paddingInlineLG: 0,
     },
     Button: {
       colorPrimary: "#1677ff",
@@ -20,7 +21,7 @@ export const lightTheme: ThemeConfig = {
   },
   token: {
     colorPrimary: "#1677ff",
-    colorText: "#000000",
+    colorText: "#333333",
     colorLink: "#1677ff",
   },
 };
