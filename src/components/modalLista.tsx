@@ -1,5 +1,7 @@
-import { ColorPicker, Flex, Form, Input, Modal } from "antd";
+import { Button, ColorPicker, Flex, Form, Input, Modal } from "antd";
 import styles from "./styles.module.scss";
+import { criarListaTarefa } from "../../data/services/ListaService";
+import { Color } from "antd/es/color-picker";
 
 export const ModalLista = ({
   open,
@@ -31,6 +33,17 @@ export const ModalLista = ({
     "#FF7F50",
   ];
 
+  const handlenewList = async(data: {descricao: string, cor: Color | string}) => {
+    try {
+      data.cor = (data.cor as Color).toHexString();
+      const res = await criarListaTarefa(data);
+      console.log(res.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+
   return (
     <Modal
       maskProps={{ style: { backgroundColor: "rgba(0, 0, 0, 0.1)" } }}
@@ -39,18 +52,18 @@ export const ModalLista = ({
       onCancel={handleClose}
       className={styles.modalLista}
       classNames={{ header: styles.modalHeader }}
-      cancelButtonProps={{ type: "text" }}
+      footer={null}
     >
-      <Form>
+      <Form onFinish={handlenewList}>
         <Flex gap={16}>
           <Form.Item
             label="Descrição"
-            name="descricao"
+            name="titulo"
             rules={[{ required: true, message: "Campo obrigatório" }]}
           >
             <Input placeholder="Descrição" />
           </Form.Item>
-          <Form.Item label="Cor" name="cor">
+          <Form.Item label="Cor" name="cor"  rules={[{ required: true, message: "Obrigatório" }]}>
             <ColorPicker
               presets={[
                 {
@@ -59,6 +72,12 @@ export const ModalLista = ({
                 },
               ]}
             />
+          </Form.Item>
+        </Flex>
+        <Flex justify="end" gap={8}>
+          <Button type="text" onClick={handleClose}>Cancelar</Button>
+          <Form.Item>
+            <Button htmlType="submit" type="primary" >Salvar</Button>
           </Form.Item>
         </Flex>
       </Form>

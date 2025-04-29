@@ -18,6 +18,9 @@ export const lightTheme: ThemeConfig = {
       borderRadius: 4,
       borderRadiusLG: 4,
     },
+    Empty: {
+      colorText: '#FFF'
+    }
   },
   token: {
     colorPrimary: "#1677ff",
@@ -43,6 +46,9 @@ export const darkTheme: ThemeConfig = {
       borderRadius: 2,
       borderRadiusLG: 2,
     },
+    Empty: {
+      colorText: '#FFF'
+    }
   },
   token: {
     colorPrimary: "#444444",
