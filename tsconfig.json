@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["jest", "@testing-library/jest-dom"],
+    "baseUrl": "./",
+    "paths": {
+      "react-router-dom": ["node_modules/react-router-dom"]
+    }
   },
   "files": [],
   "references": [
