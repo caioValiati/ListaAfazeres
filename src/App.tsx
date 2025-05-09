@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from "react-router";
+import { BrowserRouter } from "react-router";
 import * as dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 
@@ -14,9 +14,9 @@ function AppContent() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Router>
+      <BrowserRouter>
         <RootPages />
-      </Router>
+      </BrowserRouter>
     </ConfigProvider>
   );
 }
