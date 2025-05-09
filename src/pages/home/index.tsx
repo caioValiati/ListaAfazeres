@@ -37,7 +37,7 @@ export default function Home() {
       )
     );
   }, []);
-
+  // teste
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
