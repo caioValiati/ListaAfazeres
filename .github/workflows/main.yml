@@ -22,5 +22,8 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      - name: Verificar instalação do react-router-dom
+        run: npm list react-router-dom
+
       - name: Rodar testes
         run: npm test
