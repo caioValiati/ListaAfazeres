@@ -1,5 +1,5 @@
 import * as dayjs from "dayjs";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import "dayjs/locale/pt-br";
 
 import { RootPages } from "./pages";
