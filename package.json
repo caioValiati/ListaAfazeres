@@ -3,10 +3,23 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "jest": {
+    "roots": [
+      "<rootDir>",
+      "/home/some/path/"
+    ],
+    "modulePaths": [
+      "<rootDir>",
+      "/home/some/other/path"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
+  },
   "moduleDirectories": [
     "node_modules",
     "src"
-],
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
