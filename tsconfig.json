@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "types": ["jest", "@testing-library/jest-dom"],
-    "baseUrl": "./",
-    "paths": {
-      "react-router-dom": ["node_modules/react-router-dom"]
-    }
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "target": "es6",
+    "types": ["jest", "node"]
   },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src", "jest.setup.ts"]
 }
