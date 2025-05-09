@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 import * as dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 
