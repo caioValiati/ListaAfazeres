@@ -33,7 +33,7 @@ export const ModalLista = ({
 
   return (
     <Modal
-      maskProps={{ style: { backgroundColor: "rgba(0, 0, 0, 0.1)" } }}
+      maskProps={{ style: { backgroundColor: "var(--light)", opacity: 0.1 } }}
       title="Criar nova lista"
       open={open}
       onCancel={handleClose}

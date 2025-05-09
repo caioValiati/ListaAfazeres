@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Divider, Flex } from "antd";
+import { Divider, Empty, Flex } from "antd";
 import styles from "./styles.module.scss";
 import { Listas, TarefasUrgentes } from "../../../data/services/db";
 import { ITarefa, ITarefaUrgente } from "../../../data/interfaces/tarefa";
@@ -9,6 +9,7 @@ import { Task } from "../../components/task";
 import { ListCard } from "../../components/listCard";
 import { ModalLista } from "../../components/modalLista";
 import { ModalTask } from "../../components/modalTask";
+import { TbDatabaseOff } from "react-icons/tb";
 
 export default function Home() {
   const [openModalLista, setOpenModalLista] = useState(false);
@@ -42,13 +43,20 @@ export default function Home() {
         />
       </Flex>
       <Flex vertical gap={".6rem"} className={styles.urgentTasksContainer}>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            handleChangeCheck={handleChangeCheck}
+        {tasks.length > 0 ? (
+          tasks.map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+              handleChangeCheck={handleChangeCheck}
+            />
+          ))
+        ) : (
+          <Empty
+            image={<TbDatabaseOff size={32} />}
+            description={"Você ainda não possui afazeres registrados"}
           />
-        ))}
+        )}
       </Flex>
 
       <Divider />

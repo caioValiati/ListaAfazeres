@@ -48,6 +48,14 @@
     display: none !important;
 }
 
+.ant-empty-description {
+    color: var(--light-2) !important;
+}
+
+.ant-empty-image {
+    height: fit-content !important;
+}
+
 html {
     font-size: 16px;
     scroll-behavior: smooth;

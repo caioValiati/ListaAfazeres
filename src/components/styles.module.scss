@@ -96,7 +96,7 @@
 
 .modalLista > div > div {
     backdrop-filter: blur(100px);
-    background-color: transparent !important;
+    background-color: var(--dark)  !important;
 
     > button {
         color: var(--light-2) !important;
