@@ -2,6 +2,6 @@
 import { render } from "@testing-library/react";
 import App from "./App";
 
-test("renderiza sem falhas", () => {
+test("Renderiza sem falhas", () => {
   render(<App />);
 });
