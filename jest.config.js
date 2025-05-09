@@ -3,6 +3,7 @@ const config = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '\\.(css|less|scss)$': 'identity-obj-proxy',
+    "^react-router-dom$": "<rootDir>/node_modules/react-router-dom"
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transform: {
