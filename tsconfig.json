@@ -5,8 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": true,
-    "target": "es6",
-    "types": ["jest", "node"]
+    "target": "es2019",
   },
-  "include": ["src", "jest.setup.ts"]
+  "include": ["src"]
 }
