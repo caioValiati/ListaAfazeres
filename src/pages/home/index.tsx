@@ -24,6 +24,8 @@ export default function Home() {
   const [tasks, setTasks] = useState<(ITarefa | ITarefaUrgente)[]>([]);
   const [listas, setListas] = useState<ILista[]>([]);
   const [loading, setLoading] = useState(false);
+  const { nome } = JSON.parse(localStorage.getItem("auth"))
+  const primeiroNome = nome?.split(" ")[0];
 
   const tarefasConcluidas = useMemo(
     () => tasks.filter((t) => t.concluida).length,
@@ -65,7 +67,7 @@ export default function Home() {
     <div className={styles.mainContainer}>
       <Flex className={styles.header} align="end" justify="space-between">
         <div className={styles.headerTitle}>
-          <p>Olá, Caio</p>
+          <p>Olá, {primeiroNome}</p>
           <h1>Suas tarefas urgentes</h1>
         </div>
         <TasksProgress
@@ -109,7 +111,7 @@ export default function Home() {
       {loading ? (
         <Loading loading={true} size={40} />
       ) : listas.length > 0 ? (
-        listas.map((lista) => <ListCard key={lista.id} lista={lista} />)
+        listas.map((lista) => <ListCard fetchData={fetchData} key={lista.id} lista={lista} />)
       ) : (
         <CustomEmpty description="Você ainda não tem listas." />
       )}

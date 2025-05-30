@@ -1,3 +1,4 @@
+import axios from "axios";
 import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
@@ -29,7 +30,12 @@ const routes: IRoutes[] = [
 export function RoutesComponent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const signed = true;
+  const token = JSON.parse(localStorage.getItem("auth"))?.token;
+  const signed = !!token;
+
+  if (signed) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
   const paths: IRoutesFormatted[] = routes.flatMap((item) =>
     typeof item.path === "string"

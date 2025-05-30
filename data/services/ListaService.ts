@@ -8,3 +8,7 @@ export function criarListaTarefa(params: unknown) {
 export function buscarListas() {
     return axios.get(ListaPath)
 }
+
+export function excluirLista(id: string) {
+    return axios.delete(ListaPath + `/${id}`)
+}

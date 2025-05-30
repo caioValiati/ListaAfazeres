@@ -1,17 +1,35 @@
 import { useState } from "react";
 import { Form, Input, Button, Divider, Flex } from "antd";
 import styles from "./styles.module.scss";
+import { IRegistroPost } from "../../../../data/interfaces/registroPost";
+import { registro } from "../../../../data/services/AuthService";
+import { useAppContext } from "../..";
 
 export default function Signup() {
+  const { MessageNotification } = useAppContext();
   const [loading, setLoading] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
+  const onFinish = async (values: IRegistroPost) => {
     setLoading(true);
-    console.log("Valores recebidos do formulário:", values);
-    setTimeout(() => {
+    try {
+      const res = await registro(values)
+      MessageNotification(
+        {
+          text: res.data.message, 
+          popupType: "message"
+        }
+      )
+    } catch (e) {
+      MessageNotification(
+        {
+          text: e.response.data.message, 
+          popupType: "message", 
+          messageType: "error"
+        }
+      )
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -49,9 +67,10 @@ export default function Signup() {
           </Form.Item>
 
           <Form.Item
-            name="password"
+            name="senha"
             rules={[
               { required: true, message: "Por favor, insira sua senha!" },
+              { min: 6, message: "A senha deve ter no mínimo 6 caracteres!" }
             ]}
           >
             <Input.Password placeholder="Senha" variant="underlined" />
@@ -65,7 +84,7 @@ export default function Signup() {
               { required: true, message: "Por favor, confirme sua senha!" },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
+                  if (!value || getFieldValue("senha") === value) {
                     return Promise.resolve();
                   }
                   return Promise.reject(new Error("As senhas não conferem!"));

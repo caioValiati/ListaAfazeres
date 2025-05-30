@@ -13,6 +13,12 @@ export const lightTheme: ThemeConfig = {
       colorBorder: "#cccccc",
       paddingInlineLG: 0,
     },
+    Select: {
+      colorTextPlaceholder: "#666666",
+      colorBgContainer: "transparent",
+      colorIcon: "#666666",
+      colorBorder: "#cccccc",
+    },
     Button: {
       colorPrimary: "#1677ff",
       borderRadius: 4,
@@ -40,6 +46,12 @@ export const darkTheme: ThemeConfig = {
       colorIcon: "#444444",
       colorBorder: "#444444",
       paddingInlineLG: 0,
+    },
+    Select: {
+      colorTextPlaceholder: "#666666",
+      colorBgContainer: "transparent",
+      colorIcon: "#666666",
+      colorBorder: "#cccccc",
     },
     Button: {
       colorPrimary: "#444444",

@@ -1,5 +1,6 @@
+
 export interface ITarefa {
-    id: number;
+    id?: number;
     descricao: string;
     prioridade: number;
     concluida: boolean;

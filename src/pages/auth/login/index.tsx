@@ -1,17 +1,33 @@
 import { useState } from "react";
 import { Form, Input, Button, Divider, Flex } from "antd";
 import styles from "./styles.module.scss";
+import {login} from "../../../../data/services/AuthService"
+import { ILoginPost } from "../../../../data/interfaces/loginPost";
+import { useAppContext } from "../..";
+import axios from "axios";
 
 export default function Login() {
+  const { MessageNotification } = useAppContext();
   const [loading, setLoading] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
+  const onFinish = async (values: ILoginPost) => {
     setLoading(true);
-    console.log("Valores recebidos do formulário:", values);
-    setTimeout(() => {
+    try {
+      const res = await login(values)
+      localStorage.setItem("auth", JSON.stringify(res.data))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+      window.location.href = "/";
+    } catch (e) {
+      MessageNotification(
+        {
+          text: e.response.data.message, 
+          popupType: "message", 
+          messageType: "error"
+        }
+      )
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -43,7 +59,7 @@ export default function Login() {
           </Form.Item>
 
           <Form.Item
-            name="password"
+            name="senha"
             rules={[
               { required: true, message: "Por favor, insira sua senha!" },
             ]}
