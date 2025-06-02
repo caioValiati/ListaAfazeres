@@ -1,65 +1,34 @@
 import { useState } from 'react';
-import { Flex, Modal, Form, Input, Button, Select } from "antd";
+import { Flex } from "antd";
 import { TasksProgress } from "./tasksProgress";
 import { Task } from "./task";
 import { ILista } from "../../data/interfaces/lista";
-import { ITarefa } from "../../data/interfaces/tarefa";
 import styles from "./styles.module.scss";
 import { CustomEmpty } from "./empty";
 import { IoIosClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa";
-import { criarTarefa } from '../../data/services/TarefaService';
 import { excluirLista } from '../../data/services/ListaService';
+import { useFetchData } from '../pages/home/contexts/fetchDataContext';
+import { useAppContext } from '../pages';
+import { TaskModal } from './taskModal';
 
-export const ListCard = ({ lista, fetchData }: { lista: ILista; fetchData: () => void }) => {
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+export const ListCard = ({ lista }: { lista: ILista }) => {  
+  const { modal } = useAppContext();
+  const { fetchData } = useFetchData();
   const [isAddTaskModalVisible, setIsAddTaskModalVisible] = useState(false);
-  const [newTask, setNewTask] = useState({
-    descricao: '',
-    prioridade: 1,
-    concluida: false,
-  });
-
-  const handleChangeCheck = (task: ITarefa) => {
-    console.log(task);
-  };
 
   const cor = lista.cor ?? 'var(--light)';
   const qntdTarefas = lista.tarefas.length;
-  const qntdConcluidas = lista.tarefas.filter((t) => t.concluida).length;
+  const qntdConcluidas = lista.tarefas.filter((t) => t.completada).length;
 
-  const showDeleteModal = () => {
-    setIsDeleteModalVisible(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    excluirLista(lista.id.toString());
-    setIsDeleteModalVisible(false);
-    fetchData();
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-  };
-
-  const showAddTaskModal = () => {
-    setIsAddTaskModalVisible(true);
-  };
-
-  const handleAddTaskConfirm = () => {
-    const tarefa: ITarefa = {
-      descricao: newTask.descricao,
-      prioridade: newTask.prioridade,
-      concluida: newTask.concluida,
-    };
-    criarTarefa(tarefa, lista.id);
-    setIsAddTaskModalVisible(false);
-    setNewTask({ descricao: '', prioridade: 1, concluida: false });
-    fetchData()
-  };
-
-  const handleAddTaskCancel = () => {
-    setIsAddTaskModalVisible(false);
+  const handleDeleteConfirm = async () => {
+    modal.confirm({
+      title: "Tem certeza que deseja excluir essa lista?",
+      onOk: async() => {
+        await excluirLista(lista.id.toString());
+        fetchData();
+      }
+    })
   };
 
   return (
@@ -84,9 +53,9 @@ export const ListCard = ({ lista, fetchData }: { lista: ILista; fetchData: () =>
           {qntdTarefas > 0 
             ? lista.tarefas.map((task) => (
               <Task
+                listId={lista.id}
                 key={task.id}
                 task={task}
-                handleChangeCheck={handleChangeCheck}
               />
             )) 
             : <CustomEmpty description="Ainda não existem tarefas nesta lista" />}
@@ -104,67 +73,22 @@ export const ListCard = ({ lista, fetchData }: { lista: ILista; fetchData: () =>
         <Flex align="center" gap={12}>
           <FaPlus
             size={"0.8rem"}
-            onClick={showAddTaskModal}
+            onClick={() => setIsAddTaskModalVisible(true)}
             style={{ cursor: 'pointer'}}
           />
           <IoIosClose
             size={"1.4rem"}
-            onClick={showDeleteModal}
+            onClick={handleDeleteConfirm}
             style={{ cursor: 'pointer' }}
           />
         </Flex>
       </Flex>
 
-      <Modal
-        title="Confirmar Exclusão"
-        open={isDeleteModalVisible}
-        onOk={handleDeleteConfirm}
-        onCancel={handleDeleteCancel}
-        okText="Excluir"
-        footer={null}
-        cancelText="Cancelar"
-      >
-        <p>Você tem certeza que deseja excluir esta lista?</p>
-        <Flex justify="end" gap={8}>
-          <Button type="text" onClick={handleDeleteCancel}>Cancelar</Button>
-          <Button type="primary" onClick={handleDeleteConfirm}>Salvar</Button>
-        </Flex>
-      </Modal>
-
-      <Modal
-        title="Adicionar Tarefa"
-        open={isAddTaskModalVisible}
-        onOk={handleAddTaskConfirm}
-        onCancel={handleAddTaskCancel}
-        okText="Adicionar"
-        footer={null}
-        cancelText="Cancelar"
-      >
-        <Form layout="vertical" onFinish={handleAddTaskConfirm}>
-          <Form.Item label="Descrição" required>
-            <Input
-              value={newTask.descricao}
-              onChange={(e) => setNewTask({ ...newTask, descricao: e.target.value })}
-              placeholder="Digite a descrição da tarefa"
-            />
-          </Form.Item>
-          <Form.Item label="Prioridade" required>
-            <Select 
-              placeholder="Escolha a prioridade"
-              value={newTask.prioridade}
-              options={[{label: "Baixa", value: 0}, {label: "Média", value: 1}, {label: "Alta", value: 2}]}
-              onChange={(e) => setNewTask({ ...newTask, prioridade: e })}
-            />
-          </Form.Item>
-          
-        <Flex justify="end" gap={8}>
-          <Button type="text" onClick={handleAddTaskCancel}>Cancelar</Button>
-          <Form.Item>
-            <Button htmlType="submit" type="primary" >Salvar</Button>
-          </Form.Item>
-        </Flex>
-        </Form>
-      </Modal>
+      <TaskModal
+        listaId={lista.id}
+        onClose={() => setIsAddTaskModalVisible(false)}
+        visible={isAddTaskModalVisible}
+      />
     </div>
   );
 };

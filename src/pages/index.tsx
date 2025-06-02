@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from "react";
 
 // import { RoutersProject } from '@/features';
-import { App, message, notification } from "antd";
+import { App, message, Modal, notification } from "antd";
 import { RoutesComponent } from "../routes";
+import { HookAPI } from "antd/es/modal/useModal";
 
 interface IMessageNotificationProps {
   popupType: 'message' | 'notification',
@@ -17,6 +18,7 @@ interface IAppContext {
   active: string[];
   setActive: React.Dispatch<React.SetStateAction<string[]>>;
   MessageNotification: (props: IMessageNotificationProps) => void;
+  modal: HookAPI
 }
 
 const AppContext = createContext<IAppContext>({} as IAppContext);
@@ -25,6 +27,7 @@ export function RootPages() {
   const [active, setActive] = useState<string[]>([]),
     [notificationApi, contextHolder] = notification.useNotification(),
     [messageApi, contextMessage] = message.useMessage(),
+    [modal, modalContextHolder] = Modal.useModal(),
     [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function MessageNotification({
@@ -47,12 +50,14 @@ export function RootPages() {
           setIsMenuOpen,
           setActive,
           MessageNotification,
+          modal,
           isMenuOpen,
           active,
         }}
       >
         {contextHolder}
         {contextMessage}
+        {modalContextHolder}
         <RoutesComponent />
       </AppContext.Provider>
     </App>

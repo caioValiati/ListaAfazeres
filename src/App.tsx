@@ -33,7 +33,6 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    console.log("teste");
     localStorage.removeItem("auth");
     window.location.reload();
   };

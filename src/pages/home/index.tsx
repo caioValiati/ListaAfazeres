@@ -17,6 +17,7 @@ import { ModalTask } from "../../components/modalTask";
 import Loading from "../../components/loader";
 import { CustomEmpty } from "../../components/empty";
 import { FiCoffee } from "react-icons/fi";
+import { FetchDataContext } from "./contexts/fetchDataContext";
 
 export default function Home() {
   const [openModalLista, setOpenModalLista] = useState(false);
@@ -28,23 +29,15 @@ export default function Home() {
   const primeiroNome = nome?.split(" ")[0];
 
   const tarefasConcluidas = useMemo(
-    () => tasks.filter((t) => t.concluida).length,
+    () => tasks.filter((t) => t.completada).length,
     [tasks]
   );
-
-  const toggleTaskConcluida = useCallback((task: ITarefa | ITarefaUrgente) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === task.id ? { ...t, concluida: !t.concluida } : t
-      )
-    );
-  }, []);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const [resTarefas, resListas] = await Promise.all([
-        buscarTarefas({ prioridade: 3 }),
+        buscarTarefas({ prioridade: 2 }),
         buscarListas(),
       ]);
 
@@ -64,66 +57,67 @@ export default function Home() {
   }, [fetchData]);
 
   return (
-    <div className={styles.mainContainer}>
-      <Flex className={styles.header} align="end" justify="space-between">
-        <div className={styles.headerTitle}>
-          <p>Olá, {primeiroNome}</p>
-          <h1>Suas tarefas urgentes</h1>
-        </div>
-        <TasksProgress
-          totalQnt={tasks.length}
-          concluidasQnt={tarefasConcluidas}
-        />
-      </Flex>
-
-      <Flex vertical gap="0.6rem" className={styles.urgentTasksContainer}>
-        {loading ? (
-          <Loading loading={true} size={48} />
-        ) : tasks.length > 0 ? (
-          tasks.map((task) => (
-            <Task
-              key={task.id}
-              task={task}
-              handleChangeCheck={toggleTaskConcluida}
-            />
-          ))
-        ) : (
-          <div style={{ marginTop: "1rem" }}>
-            <CustomEmpty
-              description="Sem tarefas urgentes por enquanto."
-              icon={<FiCoffee />}
-            />
+    <FetchDataContext.Provider value={{ fetchData }}>
+      <div className={styles.mainContainer}>
+        <Flex className={styles.header} align="end" justify="space-between">
+          <div className={styles.headerTitle}>
+            <p>Olá, {primeiroNome}</p>
+            <h1>Suas tarefas urgentes</h1>
           </div>
+          <TasksProgress
+            totalQnt={tasks.length}
+            concluidasQnt={tarefasConcluidas}
+          />
+        </Flex>
+
+        <Flex vertical gap="0.6rem" className={styles.urgentTasksContainer}>
+          {loading ? (
+            <Loading loading={true} size={48} />
+          ) : tasks.length > 0 ? (
+            tasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+              />
+            ))
+          ) : (
+            <div style={{ marginTop: "1rem" }}>
+              <CustomEmpty
+                description="Sem tarefas urgentes por enquanto."
+                icon={<FiCoffee />}
+              />
+            </div>
+          )}
+        </Flex>
+
+        <Divider />
+
+        <Flex className={styles.header} justify="space-between" align="center">
+          <h1>Suas listas ({listas.length})</h1>
+          <CiCirclePlus
+            style={{ cursor: "pointer" }}
+            size={28}
+            onClick={() => setOpenModalLista(true)}
+          />
+        </Flex>
+
+        {loading ? (
+          <Loading loading={true} size={40} />
+        ) : listas.length > 0 ? (
+          listas.map((lista) => <ListCard key={lista.id} lista={lista} />)
+        ) : (
+          <CustomEmpty description="Você ainda não tem listas." />
         )}
-      </Flex>
 
-      <Divider />
-
-      <Flex className={styles.header} justify="space-between" align="center">
-        <h1>Suas listas ({listas.length})</h1>
-        <CiCirclePlus
-          style={{ cursor: "pointer" }}
-          size={28}
-          onClick={() => setOpenModalLista(true)}
+        <ModalLista
+          open={openModalLista}
+          handleClose={() => setOpenModalLista(false)}
         />
-      </Flex>
-
-      {loading ? (
-        <Loading loading={true} size={40} />
-      ) : listas.length > 0 ? (
-        listas.map((lista) => <ListCard fetchData={fetchData} key={lista.id} lista={lista} />)
-      ) : (
-        <CustomEmpty description="Você ainda não tem listas." />
-      )}
-
-      <ModalLista
-        open={openModalLista}
-        handleClose={() => setOpenModalLista(false)}
-      />
-      <ModalTask
-        open={openModalTask}
-        handleClose={() => setOpenModalTask(false)}
-      />
-    </div>
+        <ModalTask
+          open={openModalTask}
+          handleClose={() => setOpenModalTask(false)}
+        />
+      </div>
+    </FetchDataContext.Provider>
   );
 }
